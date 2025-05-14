@@ -33,10 +33,12 @@ class Customer(User):
     def __init__(self, username, email, password, address):
         super().__init__(username, email, password)
         self.__address = address
+        User.users.append(self.get_details)
 
     def get_details(self):
         super().get_details()
         print(f' address {self.__address} ')
+        
         
 
 class Admin(User):
@@ -57,7 +59,11 @@ class Admin(User):
         """
         Выводит список всех пользователей.
         """
-        print(f'Пользователи {User._users} ')
+        print('Количество пользователей:', len(User.users))
+        for i in range(len(User.users)):
+            print(User.users[i])
+            
+    
 
     @staticmethod
     def delete_user(username):

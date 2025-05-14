@@ -7,3 +7,5 @@ admin = Admin(username="root", email="root@derkunov.ru", password='hhhh', admin_
 
 customer.get_details()
 admin.get_details()
+
+admin.list_users()
