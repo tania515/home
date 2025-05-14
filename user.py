@@ -29,11 +29,14 @@ class User:
 class Customer(User):
     """
     Класс, представляющий клиента, наследующий класс User.
+    
     """
+
+    
     def __init__(self, username, email, password, address):
         super().__init__(username, email, password)
         self.__address = address
-        User.users.append(self.get_details)
+        User.users.append(self)
 
     def get_details(self):
         super().get_details()
@@ -61,7 +64,7 @@ class Admin(User):
         """
         print('Количество пользователей:', len(User.users))
         for i in range(len(User.users)):
-            print(User.users[i])
+            User.users[i].get_details()
             
     
 
