@@ -29,14 +29,14 @@ class User:
     def hash_password(password):
         md5_hash = hashlib.new('md5')
         md5_hash.update(password.encode('utf-8'))
-        return md5_hash.hexdigest(), password
+        return md5_hash.hexdigest()
 
-    @staticmethod
-    def check_password(stored_password, provided_password):
+    
+    def check_password(self,password):
         """
         Проверка пароля.
         """
-        pass
+        return self.__password == User.hash_password(password)
 
     def get_details(self):
         print(f'Имя пользователя  {self.__username}, Email {self.__email} ', end="")

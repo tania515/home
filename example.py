@@ -33,4 +33,4 @@ SessionManager.login("Mikhail", "hhhh")
 
 SessionManager.logout()  # Выход пользователя
 
-SessionManager.login("ivan", "wrongpass")  
+SessionManager.login("admin", "wrongpass")  

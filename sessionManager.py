@@ -12,7 +12,7 @@ class SessionManager:
                
         """and user.check_password(password)"""
         
-        if user:
+        if user and user.check_password(password):
             cls._current_user = user
             print(f"Успешный вход: {username}")
             return True
