@@ -57,6 +57,8 @@ AuthenticationService.register("Mikki","python@derkunov.ru",'xxxhhh')
 
 AuthenticationService.login("Mikki", "xxxhhh") 
 
+AuthenticationService.get_current_user()
+
 AuthenticationService.logout("Mikhail") 
 
 AuthenticationService.logout("Mikki") 

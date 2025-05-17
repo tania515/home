@@ -35,11 +35,7 @@ class AuthenticationService:
     
     @classmethod
     def get_current_user(cls):
-        pass
-        """Получение текущего пользователя"""
-        """if cls._current_user:
-            return cls._current_user
-        else: return "нет активных пользователей"""
+        print("текущие пользователи ", list(cls.token.keys()))
 
     @classmethod
     def register(cls,username, email, password):
