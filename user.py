@@ -12,7 +12,7 @@ class User:
             self.__username = username
             self.__email = email
             self.__password = User.hash_password(password)
-            User.users.update({self.__username : self.__password})
+            User.users.update({self.__username : self})
             return True
         else: print('Объект не создан, такой пользователь уже есть')
         
@@ -40,6 +40,10 @@ class User:
 
     def get_details(self):
         print(f'Имя пользователя  {self.__username}, Email {self.__email} ', end="")
+    
+    @classmethod
+    def find_by_username(cls, username):
+        return cls.users.get(username)  # Возвращает user_object или None
 
 class Customer(User):
     """
@@ -52,6 +56,7 @@ class Customer(User):
        if super().__init__(username, email, password):
            self.__address = address
            Customer.customers.append(self)
+ 
 
     
     def get_details(self):
@@ -93,4 +98,5 @@ class Admin(User):
         username = input() 
         index = next((i for i, p in enumerate(Customer.customers) if p.username == username), None)
         del Customer.customers[index]
+        del User.users[username]
  
