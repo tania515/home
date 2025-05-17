@@ -5,16 +5,31 @@ class User:
     """
     Базовый класс, представляющий пользователя.
     """
-    users = []  # Список для хранения всех пользователей
+    users = {}  #  хранения всех пользователей
 
     def __init__(self, username, email, password):
-        self.__username = username
-        self.__email = email
-        self.__password = password
+        if User.is_username_unique(username):
+            self.__username = username
+            self.__email = email
+            self.__password = User.hash_password(password)
+            User.users.update({self.__username : self.__password})
+            return True
+        else: print('Объект не создан, такой пользователь уже есть')
+        
+    @property
+    def username(self):
+        return self.__username    
+
+    @staticmethod
+    def is_username_unique(username):
+        return username not in User.users
+
 
     @staticmethod
     def hash_password(password):
-        pass
+        md5_hash = hashlib.new('md5')
+        md5_hash.update(password.encode('utf-8'))
+        return md5_hash.hexdigest(), password
 
     @staticmethod
     def check_password(stored_password, provided_password):
@@ -31,13 +46,14 @@ class Customer(User):
     Класс, представляющий клиента, наследующий класс User.
     
     """
-
+    customers = []
     
     def __init__(self, username, email, password, address):
-        super().__init__(username, email, password)
-        self.__address = address
-        User.users.append(self)
+       if super().__init__(username, email, password):
+           self.__address = address
+           Customer.customers.append(self)
 
+    
     def get_details(self):
         super().get_details()
         print(f' address {self.__address} ')
@@ -49,8 +65,8 @@ class Admin(User):
     Класс, представляющий администратора, наследующий класс User.
     """
     def __init__(self, username, email, password, admin_level):
-        super().__init__(username, email, password)
-        self.__admin_level = admin_level
+        if super().__init__(username, email, password):
+            self.__admin_level = admin_level
         
 
     def get_details(self):
@@ -62,15 +78,19 @@ class Admin(User):
         """
         Выводит список всех пользователей.
         """
-        print('Количество пользователей:', len(User.users))
-        for i in range(len(User.users)):
-            User.users[i].get_details()
+        print('Количество пользователей:', len(Customer.customers))
+        for i in range(len(Customer.customers)):
+            Customer.customers[i].get_details()
             
     
 
     @staticmethod
-    def delete_user(username):
+    def delete_user():
         """
         Удаляет пользователя по имени пользователя.
         """
-        pass
+        print("введите имя пользователя для удаления")
+        username = input() 
+        index = next((i for i, p in enumerate(Customer.customers) if p.username == username), None)
+        del Customer.customers[index]
+ 
