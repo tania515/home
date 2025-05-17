@@ -1,15 +1,31 @@
 from user import Customer, Admin
-from sessionManager import SessionManager
+from sessionManager import AuthenticationService
 import hashlib
-import uuid
+
 
 # Создаем пользователей
-customer1 = Customer(username="Mikhail", email="python@derkunov.ru", password='hhhh', address="033 Russ Bur" )
-customer3 = Customer(username="Mikhail", email="python@derkunov.ru", password='hhhh', address="033 Russ Bur" )
-customer2 = Customer(username="Mikle", email="python@derkunov.ru", password='ttt', address=" Russ Bur" )
-admin1 = Admin(username="root", email="root@derkunov.ru", password='hhhh', admin_level=5)
-admin2 = Admin(username="admin", email="root1@derkunov.ru", password='qwerty123', admin_level=5)
+try:
+    customer1 = Customer(username="Mikhail", email="python@derkunov.ru", password='hhhh', address="033 Russ Bur" )
+except ValueError as e:
+    print(e)
+try:
+    customer3 = Customer(username="Mikhail", email="python@derkunov.ru", password='hhhh', address="033 Russ Bur" )
+except ValueError as e:
+    print(e)    
+try:
+    customer2 = Customer(username="Mikle", email="python@derkunov.ru", password='ttt', address=" Russ Bur" )
+except ValueError as e:
+    print(e)   
+try:
+    admin1 = Admin(username="root", email="root@derkunov.ru", password='hhhh', admin_level=5)
+except ValueError as e:
+    print(e)    
+try:
+    admin2 = Admin(username="admin", email="root1@derkunov.ru", password='qwerty123', admin_level=5)
+except ValueError as e:
+    print(e)     
 
+ 
 customer1.get_details()
 customer2.get_details()
 admin1.get_details()
@@ -20,17 +36,27 @@ Admin.delete_user()
 Admin.list_users()
 
 
-SessionManager.login("admin", "qwerty123")  
-print('текущий пользователь ', SessionManager.get_current_user().username) 
+AuthenticationService.login("admin", "qwerty123")  
+#print('текущий пользователь ', AuthenticationService.get_current_user().username) 
 
-SessionManager.login("Mikhail", "hhhh")  
+AuthenticationService.login("Mikhail", "hhhh")  
 
-SessionManager.login("ivan", "wrongpass")  
+AuthenticationService.login("ivan", "wrongpass")  
 
-SessionManager.logout()  # Выход пользователя
+AuthenticationService.login("Mikhail", "hhhh")  
 
-SessionManager.login("Mikhail", "hhhh")  
+AuthenticationService.logout("Mikhail")  # Выход пользователя
 
-SessionManager.logout()  # Выход пользователя
+AuthenticationService.login("Mikhail", "hhhh")  
 
-SessionManager.login("admin", "wrongpass")  
+AuthenticationService.logout("admin")  # Выход пользователя
+
+AuthenticationService.login("admin", "wrongpass")  
+
+AuthenticationService.register("Mikki","python@derkunov.ru",'xxxhhh')
+
+AuthenticationService.login("Mikki", "xxxhhh") 
+
+AuthenticationService.logout("Mikhail") 
+
+AuthenticationService.logout("Mikki") 

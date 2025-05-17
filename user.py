@@ -8,13 +8,15 @@ class User:
     users = {}  #  хранения всех пользователей
 
     def __init__(self, username, email, password):
-        if User.is_username_unique(username):
-            self.__username = username
-            self.__email = email
-            self.__password = User.hash_password(password)
-            User.users.update({self.__username : self})
-            return True
-        else: print('Объект не создан, такой пользователь уже есть')
+        if not User.is_username_unique(username):
+            raise ValueError('Пользователь с таким именем уже существует')
+       
+        self.__username = username
+        self.__email = email
+        self.__password = User.hash_password(password)
+        User.users.update({self.__username : self})
+           
+        
         
     @property
     def username(self):
@@ -53,9 +55,9 @@ class Customer(User):
     customers = []
     
     def __init__(self, username, email, password, address):
-       if super().__init__(username, email, password):
-           self.__address = address
-           Customer.customers.append(self)
+        super().__init__(username, email, password)
+        self.__address = address
+        Customer.customers.append(self)
  
 
     
@@ -70,8 +72,8 @@ class Admin(User):
     Класс, представляющий администратора, наследующий класс User.
     """
     def __init__(self, username, email, password, admin_level):
-        if super().__init__(username, email, password):
-            self.__admin_level = admin_level
+        super().__init__(username, email, password)
+        self.__admin_level = admin_level
         
 
     def get_details(self):
